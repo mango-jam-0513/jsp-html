@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://analytiqhealth.org/BASE/css/ecr.css" />
+    <link rel="stylesheet" type="text/css" href="https://analytiqhealth.org/BASE/its/css/main.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
+    <link rel="stylesheet" type="text/css" href="https://analytiqhealth.org/BASE/css/ecr.css" />
+    <link rel="stylesheet" type="text/css" href="https://analytiqhealth.org/BASE/its/css/main.css" />
+    <link
+        href="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="fixed.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="node_modules/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/jquery-resizable-columns@0.2.3/dist/jquery.resizableColumns.css">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+        </script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
+    <script
+        src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script
+        src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/resizable/bootstrap-table-resizable.min.js"></script>
+    <script src="https://unpkg.com/jquery-resizable-columns@0.2.3/dist/jquery.resizableColumns.min.js"></script>
+    <script
+        src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <script
+        src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Add minus icon for collapse element which is open by default
+            $(".collapse.show").each(function () {
+                $(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
+            });
+
+            // Toggle plus minus icon on show hide of collapse element
+            $(".collapse").on('show.bs.collapse', function () {
+                $(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+            }).on('hide.bs.collapse', function () {
+                $(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+            });
+        });
+    </script>
+
+    <style>
+        th {
+            text-align: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="/BASE/Analyt" method="post">
+            <input type="hidden" name="formName" value="a">
+            <fieldset>
+                <legend class="text-center">GENERAL SERVICE COST CENTERS</legend>
+                <div class="table-responsive">
+                    <div id="main">
+                        <div class="row d-flex p-0 m-0">
+                            <div class="col-1 p-0 m-0 py-5 border border-primary"></div>
+                            <div class="col-1 p-0 m-0 py-5 border border-primary"></div>
+                            <div class="col-2 p-0 m-0 py-5 border border-primary text-center">COST CENTER DESCRIPTIONS (omit cents)</div>
+                            <div class="col-1 p-0 m-0 py-5 border border-primary row">
+                                    <div class="col-12 border-bottom border-primary">1</div>
+                                    <div class="col-12 border-top border-primary">2</div>
+                            </div>
+                            <div class="col-1 p-0 m-0 py-5 border border-primary"></div>
+                            <div class="col-1 p-0 m-0 py-5 border border-primary"></div>
+                            <div class="col-1 p-0 m-0 py-5 border border-primary"></div>
+                            <div class="col-2 p-0 m-0 py-5 border border-primary"></div>
+                            <div class="col-1 p-0 m-0 py-5 border border-primary"></div>
+                            <div class="col-1 p-0 m-0 py-5 border border-primary"></div>
+                        </div>
+                        <tr>
+                            <th rowspan="2" class="line-number"></th>
+                            <th rowspan="2" style="width: 70px;"></th>
+                            <th rowspan="2" style="width: 30%;">COST CENTER DESCRIPTIONS (omit cents)</th>
+                            <th>SALARIES</th>
+                            <th>OTHER</th>
+                            <th>TOTAL (col. 1 + col. 2)</th>
+                            <th>RECLASSIFI-CATIONS</th>
+                            <th>RECLASSIFIED TRIAL BALANCE (col. 3 +- col. 4)</th>
+                            <th>ADJUSTMENTS</th>
+                            <th>NET EXPENSES FOR ALLOCATION (col. 5 +- col. 6)</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                        </tr>
+                    </div>
+                </div>
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="fa fa-plus"> Lines 1 - 10</i>
+    
+                                </button>
+                            </h2>
+                        </div>
+    
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingTwo"
+                            data-parent="#accordionExample">
+    
+                            <div class="card-body">
+                                <table class="top-table" data-toggle="table" data-search="true" data-show-columns="true"
+                                    data-pagination="true" data-show-fullscreen="true" data-search-align="left"
+                                    data-filter-control="true" data-show-export="true" data-resizable="true"
+                                    data-sticky-header="true">
+                                    <thead id="secondary">
+                                        <tr>
+                                            <th class="line-number">Line</th>
+                                            <th style="width: 70px;">Cost Center</th>
+                                            <th style="width: 30%;">COST CENTER DESCRIPTIONS (omit cents)
+                                            </th>
+                                            <th>SALARIES</th>
+                                            <th>OTHER</th>
+                                            <th>TOTAL</th>
+                                            <th>RECLASSIFI-CATIONS</th>
+                                            <th>RECLASSIFIED TRIAL BALANCE</th>
+                                            <th>ADJUSTMENTS</th>
+                                            <th>NET EXPENSES FOR ALLOCATION)</th>
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="line-number">1</td>
+                                            <td>00100</td>
+                                            <td><input type="hidden" name="f1_1_cost_center_descriptions"
+                                                    value="Capital Related Costs-Buildings and Fixtures">Capital Related
+                                                Costs-Buildings and
+                                                Fixtures
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            disabled=""><span></span></label>
+                                                </div>
+                                            </td>
+    
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f1_3_other" id="f1_3_other" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f1_3_other')"></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f1_4_total" id="f1_4_total" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f1_4_total')"></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f1_5_reclassifications" id="f1_5_reclassifications"
+                                                            autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f1_5_reclassifications')"></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f1_6_reclassified_trial_balance"
+                                                            id="f1_6_reclassified_trial_balance" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f1_6_reclassified_trial_balance')"></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f1_7_adjustments" id="f1_7_adjustments" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f1_7_adjustments')"></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f1_8_net_expenses_for_allocation"
+                                                            id="f1_8_net_expenses_for_allocation" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f1_8_net_expenses_for_allocation')"></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="8">
+                                                <div id="warn_1" style="background-color:yellow;color:red"></div>
+                                                <div id="info_1"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">2</td>
+                                            <td>00200</td>
+                                            <td><input type="hidden" name="f2_1"
+                                                    value="Capital Related Costs-Movable Equipment">Capital
+                                                Related Costs-Movable Equipment
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            disabled=""><span></span></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f2_3" id="f2_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f2_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f2_4" id="f2_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f2_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f2_5" id="f2_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f2_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f2_6" id="f2_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f2_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f2_7" id="f2_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f2_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f2_8" id="f2_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f2_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_2" style="background-color:yellow;color:red"></div>
+                                                <div id="info_2"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">3</td>
+                                            <td>00300</td>
+                                            <td><input type="hidden" name="f3_1" value="Other Capital Related Costs">Other
+                                                Capital Related
+                                                Costs
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            disabled=""><span></span></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f3_3" id="f3_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f3_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f3_4" id="f3_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f3_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f3_5" id="f3_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f3_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f3_6" id="f3_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f3_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f3_7" id="f3_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f3_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f3_8" id="f3_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f3_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_3" style="background-color:yellow;color:red"></div>
+                                                <div id="info_3"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">4</td>
+                                            <td>00400</td>
+                                            <td><input type="hidden" name="f4_1"
+                                                    value="Employee Benefits Department">Employee Benefits
+                                                Department
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f4_2_salaries" id="f4_2_salaries" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f4_2_salaries')"></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f4_3" id="f4_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f4_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f4_4" id="f4_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f4_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f4_5" id="f4_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f4_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f4_6" id="f4_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f4_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f4_7" id="f4_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f4_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f4_8" id="f4_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f4_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_4" style="background-color:yellow;color:red"></div>
+                                                <div id="info_4"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">5</td>
+                                            <td>00500</td>
+                                            <td><input type="hidden" name="f5_1"
+                                                    value="Administrative and General">Administrative and General
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f5_2" id="f5_2" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f5_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f5_3" id="f5_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f5_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f5_4" id="f5_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f5_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f5_5" id="f5_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f5_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f5_6" id="f5_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f5_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f5_7" id="f5_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f5_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f5_8" id="f5_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f5_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_5" style="background-color:yellow;color:red"></div>
+                                                <div id="info_5"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">6</td>
+                                            <td>00600</td>
+                                            <td><input type="hidden" name="f6_1" value="Maintenance and Repairs">Maintenance
+                                                and Repairs</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f6_2" id="f6_2" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f6_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f6_3" id="f6_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f6_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f6_4" id="f6_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f6_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f6_5" id="f6_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f6_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f6_6" id="f6_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f6_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f6_7" id="f6_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f6_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f6_8" id="f6_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f6_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_6" style="background-color:yellow;color:red"></div>
+                                                <div id="info_6"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">7</td>
+                                            <td>00700</td>
+                                            <td><input type="hidden" name="f7_1" value="Operation of Plant">Operation of
+                                                Plant</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f7_2" id="f7_2" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f7_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f7_3" id="f7_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f7_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f7_4" id="f7_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f7_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f7_5" id="f7_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f7_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f7_6" id="f7_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f7_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f7_7" id="f7_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f7_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f7_8" id="f7_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f7_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_7" style="background-color:yellow;color:red"></div>
+                                                <div id="info_7"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">8</td>
+                                            <td>00800</td>
+                                            <td><input type="hidden" name="f8_1" value="Laundry and Linen Service">Laundry
+                                                and Linen Service
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f8_2" id="f8_2" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f8_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f8_3" id="f8_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f8_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f8_4" id="f8_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f8_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f8_5" id="f8_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f8_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f8_6" id="f8_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f8_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f8_7" id="f8_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f8_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f8_8" id="f8_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f8_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_8" style="background-color:yellow;color:red"></div>
+                                                <div id="info_8"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">9</td>
+                                            <td>00900</td>
+                                            <td><input type="hidden" name="f9_1" value="Housekeeping">Housekeeping</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f9_2" id="f9_2" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f9_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f9_3" id="f9_3" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f9_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f9_4" id="f9_4" autocomplete="off" value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f9_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f9_5" id="f9_5" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f9_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f9_6" id="f9_6" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f9_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f9_7" id="f9_7" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f9_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f9_8" id="f9_8" autocomplete="off" value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f9_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_9" style="background-color:yellow;color:red"></div>
+                                                <div id="info_9"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">10</td>
+                                            <td>01000</td>
+                                            <td><input type="hidden" name="f10_1" value="Dietary">Dietary</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f10_2" id="f10_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f10_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f10_3" id="f10_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f10_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f10_4" id="f10_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f10_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f10_5" id="f10_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f10_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f10_6" id="f10_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f10_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f10_7" id="f10_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f10_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f10_8" id="f10_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f10_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_10" style="background-color:yellow;color:red"></div>
+                                                <div id="info_10"></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+    
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"
+                                    data-resizable="true">
+                                    <i class="fa fa-plus"> Lines 11 - 19</i>
+    
+                                </button>
+                            </h2>
+                        </div>
+    
+                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingThree"
+                            data-parent="#accordionExample">
+                            <div class="card-body">
+                                <table class="table" data-toggle="table" data-search="true" data-show-columns="true">
+                                    <thead id="secondary">
+                                        <tr>
+                                            <th rowspan="2" class="line-number">Line</th>
+                                            <th rowspan="2" style="width: 70px;">Cost Center</th>
+                                            <th rowspan="2" style="width: 30%;">COST CENTER DESCRIPTIONS (omit cents)
+                                            </th>
+                                            <th>SALARIES</th>
+                                            <th>OTHER</th>
+                                            <th>TOTAL</th>
+                                            <th>RECLASSIFI-CATIONS</th>
+                                            <th>RECLASSIFIED TRIAL BALANCE</th>
+                                            <th>ADJUSTMENTS</th>
+                                            <th>NET EXPENSES FOR ALLOCATION</th>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                        </tr>
+    
+                                    <tbody>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_10" style="background-color:yellow;color:red"></div>
+                                                <div id="info_10"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">11</td>
+                                            <td>01100</td>
+                                            <td><input type="hidden" name="f11_1" value="Cafeteria" />Cafeteria</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f11_2" id="f11_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f11_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f11_3" id="f11_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f11_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f11_4" id="f11_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f11_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f11_5" id="f11_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f11_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f11_6" id="f11_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f11_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f11_7" id="f11_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f11_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f11_8" id="f11_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f11_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_11" style="background-color:yellow;color:red"></div>
+                                                <div id="info_11"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">12</td>
+                                            <td>01200</td>
+                                            <td><input type="hidden" name="f12_1"
+                                                    value="Maintenance of Personnel" />Maintenance of Personnel
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f12_2" id="f12_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f12_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f12_3" id="f12_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f12_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f12_4" id="f12_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f12_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f12_5" id="f12_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f12_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f12_6" id="f12_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f12_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f12_7" id="f12_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f12_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f12_8" id="f12_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f12_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_12" style="background-color:yellow;color:red"></div>
+                                                <div id="info_12"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">13</td>
+                                            <td>01400</td>
+                                            <td><input type="hidden" name="f13_1" value="Nursing Administration" />Nursing
+                                                Administration</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f13_2" id="f13_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f13_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f13_3" id="f13_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f13_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f13_4" id="f13_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f13_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f13_5" id="f13_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f13_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f13_6" id="f13_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f13_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f13_7" id="f13_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f13_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f13_8" id="f13_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f13_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_13" style="background-color:yellow;color:red"></div>
+                                                <div id="info_13"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">14</td>
+                                            <td>01400</td>
+                                            <td><input type="hidden" name="f14_1"
+                                                    value="Central Services and Supply" />Central Services and
+                                                Supply
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f14_2" id="f14_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f14_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f14_3" id="f14_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f14_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f14_4" id="f14_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f14_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f14_5" id="f14_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f14_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f14_6" id="f14_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f14_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f14_7" id="f14_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f14_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f14_8" id="f14_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f14_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_14" style="background-color:yellow;color:red"></div>
+                                                <div id="info_14"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">15</td>
+                                            <td>01500</td>
+                                            <td><input type="hidden" name="f15_1" value="Pharmacy" />Pharmacy</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f15_2" id="f15_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f15_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f15_3" id="f15_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f15_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f15_4" id="f15_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f15_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f15_5" id="f15_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f15_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f15_6" id="f15_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f15_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f15_7" id="f15_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f15_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f15_8" id="f15_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f15_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_15" style="background-color:yellow;color:red"></div>
+                                                <div id="info_15"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">16</td>
+                                            <td>01600</td>
+                                            <td><input type="hidden" name="f16_1"
+                                                    value="Medical Records & Medical Records Library" />Medical
+                                                Records & Medical Records Library
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f16_2" id="f16_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f16_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f16_3" id="f16_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f16_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f16_4" id="f16_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f16_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f16_5" id="f16_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f16_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f16_6" id="f16_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f16_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f16_7" id="f16_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f16_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f16_8" id="f16_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f16_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_16" style="background-color:yellow;color:red"></div>
+                                                <div id="info_16"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">17</td>
+                                            <td>01700</td>
+                                            <td><input type="hidden" name="f17_1" value="Social Service" />Social
+                                                Service</td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f17_2" id="f17_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f17_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f17_3" id="f17_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f17_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f17_4" id="f17_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f17_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f17_5" id="f17_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f17_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f17_6" id="f17_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f17_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f17_7" id="f17_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f17_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f17_8" id="f17_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f17_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_17" style="background-color:yellow;color:red"></div>
+                                                <div id="info_17"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">18</td>
+                                            <td></td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_1" id="f18_1" autocomplete="off" value=""><span>Other
+                                                            General Service
+                                                            (specify)</span></label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_1')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_2" id="f18_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_3" id="f18_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_4" id="f18_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_5" id="f18_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_6" id="f18_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_7" id="f18_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f18_8" id="f18_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f18_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div id="warn_18" style="background-color:yellow;color:red"></div>
+                                                <div id="info_18"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="line-number">19</td>
+                                            <td>01900</td>
+                                            <td><input type="hidden" name="f19_1"
+                                                    value="Nonphysician Anesthetists" />Nonphysician Anesthetists
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f19_2" id="f19_2" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f19_2')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f19_3" id="f19_3" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f19_3')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f19_4" id="f19_4" autocomplete="off"
+                                                            value="">Total</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f19_4')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f19_5" id="f19_5" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f19_5')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f19_6" id="f19_6" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f19_6')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f19_7" id="f19_7" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f19_7')"></a></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group d-flex"><label
+                                                        class="pure-material-textfield-filled"><input type="text"
+                                                            name="f19_8" id="f19_8" autocomplete="off"
+                                                            value="">Amount</label>
+    
+    
+                                                    <a class="far fas-query fa-question-circle"
+                                                        style="color: #007eda; width: 10px; outline: none;"
+                                                        onclick="javascript:displayComments('a','f19_8')"></a></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </fieldset>
+        </form>
+    </div>
+
+
+</body>
+
+</html>
